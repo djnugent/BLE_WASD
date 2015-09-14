@@ -56,29 +56,28 @@ void send_key(uint8_t c, uint8_t is_long_key, uint8_t no_release) {
   else {
     hid_key = PS2_to_HID_keymap[c];
   }
-  if (hid_key == HID_ENTER) { //reset just to clean up every now and then
-    modifiers = 0;
-  }
 
-  if(hid_key == HID_ESC && modifiers == 0x03){
-    start_BLE(1); //reset Keyboard
-    return;
-  }
+
+  //peek and intercept keys before they get sent for special functions
+  bool send_key = special_functions(hid_key, is_long_key);
+
   //convert to command
   String key = hex_to_str(hid_key);
   String mod = hex_to_str(modifiers);
   String cmd = "AT+BLEKEYBOARDCODE=" + mod + "-00-" + key + "-00-00-00-00";
-  //send bluetooth
-  ble.println(cmd);
 
-  if(DEBUG){
-    Serial.println("Sent hid: " + key);
+  if(send_key){
+    //send bluetooth
+    ble.println(cmd);
+    if (!no_release) {
+      ble.println("AT+BLEKEYBOARDCODE=00-00");
+    }
+  
+    if(DEBUG){
+      Serial.println("hid key: " + key);
+    }
   }
-
-  if (!no_release) {
-    ble.println("AT+BLEKEYBOARDCODE=00-00");
-  }
-
+  
 }
 
 void release_key() {

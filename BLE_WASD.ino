@@ -23,7 +23,7 @@
  * Make sure you keyboard can run on 3.3v or make sure you can provide  it with 5v
  *
  *
- * Problems: The status leds don't work
+ * Problems: The status leds don't work, only one way communication
  *           
  * 
  */
