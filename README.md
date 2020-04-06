@@ -1,5 +1,8 @@
 # Bluetooth enabled WASD keyboard
 
+**Checkout updated version forked by another github user! https://github.com/michaeldjcox/BLE_WASD** 
+---
+
 ![](https://cdn.hackaday.io/images/4262051442187241385.jpg)
 
 See https://hackaday.io/project/7646-ble-wasdmechanical-keyboard for build instructions!
